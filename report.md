@@ -39,3 +39,226 @@ Now let's inspect the data:
     ## 10 2015-12-01 00:00:08    10.1016/S0167-7012(00)00219-0 56ed2bffa7e9c
     ## # ... with 3,879,501 more rows, and 3 more variables: X4 <chr>, X5 <chr>,
     ## #   X6 <chr>
+
+Is it clean?
+
+    library(dplyr)
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+    my_data %>% 
+      dplyr::group_by(X4) %>% 
+      dplyr::summarise(Counts = n()) %>%
+      dplyr::arrange(desc(Counts))
+
+    ## # A tibble: 179 x 2
+    ##               X4 Counts
+    ##            <chr>  <int>
+    ## 1          China 642602
+    ## 2           Iran 423213
+    ## 3          India 398111
+    ## 4         Russia 220480
+    ## 5  United States 214228
+    ## 6          Egypt 159465
+    ## 7      Indonesia 102955
+    ## 8         Brazil  96381
+    ## 9            N/A  86057
+    ## 10       Morocco  82212
+    ## # ... with 169 more rows
+
+It looks clean, great!
+
+Well, the data is huge and you might run out of memory if you try to
+load the whole dataset. So, let's subset our data and save it to your
+disk. Let's define a function:
+
+    my_helper <- function(file = NULL) {
+      tt <- readr::read_tsv(file = file, col_names = FALSE) %>%
+      dplyr::filter(X4 == "Iran")
+      file_name <- gsub(".tab", "_iran.csv", file)
+      write.csv(tt,  file_name, row.names = FALSE)
+    }
+
+Get files
+
+    my_files <- list.files("data/scihub_data/", pattern = "tab")
+    my_files <- paste0("data/scihub_data/", my_files)
+
+And apply it
+
+    sapply(my_files, my_helper)
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+
+    ## Warning: 2 parsing failures.
+    ##     row col  expected    actual
+    ## 2498160  -- 6 columns 2 columns
+    ## 2498161  -- 6 columns 5 columns
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+
+    ## $`data/scihub_data/dec2015.tab`
+    ## NULL
+    ## 
+    ## $`data/scihub_data/feb2016.tab`
+    ## NULL
+    ## 
+    ## $`data/scihub_data/jan2016.tab`
+    ## NULL
+    ## 
+    ## $`data/scihub_data/nov2015.tab`
+    ## NULL
+    ## 
+    ## $`data/scihub_data/oct2015.tab`
+    ## NULL
+    ## 
+    ## $`data/scihub_data/sep2015.tab`
+    ## NULL
+
+We now have the subset on our local disk. Let's load in the whole
+Iranian usage events.
+
+    my_files <- list.files("data/scihub_data/", pattern = "iran")
+    my_files <- paste0("data/scihub_data/", my_files)
+
+    sci_hub_ir <- NULL
+
+    for (i in my_files) {
+      my_data <- readr::read_csv(file = i)
+      sci_hub_ir <- rbind(sci_hub_ir, my_data)
+    }
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+    ## Parsed with column specification:
+    ## cols(
+    ##   X1 = col_datetime(format = ""),
+    ##   X2 = col_character(),
+    ##   X3 = col_character(),
+    ##   X4 = col_character(),
+    ##   X5 = col_character(),
+    ##   X6 = col_character()
+    ## )
+
+So, let's inspect the data frame
+
+    sci_hub_ir
+
+    ## # A tibble: 2,631,035 x 6
+    ##                     X1                             X2            X3    X4
+    ## *               <time>                          <chr>         <chr> <chr>
+    ## 1  2015-12-01 00:00:05      10.1049/iet-cdt.2014.0146 56ed9ff1c5403  Iran
+    ## 2  2015-12-01 00:00:08   10.1016/j.apsusc.2015.05.185 56ed2c38b0cbc  Iran
+    ## 3  2015-12-01 00:00:09              10.1021/jp404207x 56ed2c396a16c  Iran
+    ## 4  2015-12-01 00:00:13   10.1016/0957-4158(91)90024-5 56ed2c397970f  Iran
+    ## 5  2015-12-01 00:00:15  10.1016/S0167-6105(97)00220-1 56ed2c381399b  Iran
+    ## 6  2015-12-01 00:00:24     10.1016/j.ejor.2007.03.011 56ed2c3731b6d  Iran
+    ## 7  2015-12-01 00:00:35      10.1007/s11418-015-0931-7 56ed2b4d23a81  Iran
+    ## 8  2015-12-01 00:00:44 10.1007/978-3-642-36197-5_60-1 56ed2c3974529  Iran
+    ## 9  2015-12-01 00:00:46     10.1016/j.ejps.2005.04.010 56ed2c3968813  Iran
+    ## 10 2015-12-01 00:00:49              10.1021/ja208256u 56ed2b4017fd3  Iran
+    ## # ... with 2,631,025 more rows, and 2 more variables: X5 <chr>, X6 <chr>

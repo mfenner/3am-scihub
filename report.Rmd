@@ -17,4 +17,63 @@ Now let's inspect the data:
 my_data
 ```
 
-sksks
+Is it clean?
+
+```{r}
+library(dplyr)
+my_data %>% 
+  dplyr::group_by(X4) %>% 
+  dplyr::summarise(Counts = n()) %>%
+  dplyr::arrange(desc(Counts))
+```
+
+It looks clean, great!
+
+Well, the data is huge and you might run out of memory if you try to load the whole dataset. So, let's subset our data and save it to your disk. Let's define a function:
+
+```{r}
+my_helper <- function(file = NULL) {
+  tt <- readr::read_tsv(file = file, col_names = FALSE) %>%
+  dplyr::filter(X4 == "Iran")
+  file_name <- gsub(".tab", "_iran.csv", file)
+  write.csv(tt,  file_name, row.names = FALSE)
+}
+```
+
+Get files
+
+```{r}
+my_files <- list.files("data/scihub_data/", pattern = "tab")
+my_files <- paste0("data/scihub_data/", my_files)
+```
+
+And apply it
+
+```{r}
+sapply(my_files, my_helper)
+```
+
+We now have the subset on our local disk. Let's load in the whole Iranian usage events.
+
+
+```{r}
+my_files <- list.files("data/scihub_data/", pattern = "iran")
+my_files <- paste0("data/scihub_data/", my_files)
+```
+
+```{r}
+sci_hub_ir <- NULL
+
+for (i in my_files) {
+  my_data <- readr::read_csv(file = i)
+  sci_hub_ir <- rbind(sci_hub_ir, my_data)
+}
+```
+
+So, let's inspect the data frame
+
+```{r}
+sci_hub_ir
+```
+
+
