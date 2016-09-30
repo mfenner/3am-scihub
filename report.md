@@ -205,27 +205,26 @@ And let's inspect it:
     ## # A tibble: 10 x 31
     ##               alternative.id
     ##                        <chr>
-    ## 1          S0020025516000153
-    ## 2                        622
-    ## 3                           
-    ## 4                           
-    ## 5          S098194281300435X
-    ## 6                           
-    ## 7  10.1108/JBIM-04-2012-0066
-    ## 8                        207
-    ## 9                           
-    ## 10         S0045206815000036
+    ## 1     10.1021/acsami.5b06813
+    ## 2  10.1142/S1793557112500155
+    ## 3          S1578219009700034
+    ## 4          10.1021/ie020726z
+    ## 5          S0015379683800766
+    ## 6          S0927024816000131
+    ## 7          S0006291X10008648
+    ## 8          10.1021/la800858z
+    ## 9          S1877705815001599
+    ## 10         S0020746212001370
     ## # ... with 30 more variables: container.title <chr>, created <chr>,
     ## #   deposited <chr>, DOI <chr>, funder <list>, indexed <chr>, ISBN <chr>,
-    ## #   ISSN <chr>, issued <chr>, license_date <chr>,
-    ## #   license_content.version <chr>, license_delay.in.days <chr>,
-    ## #   license_URL <chr>, link <list>, member <chr>, page <chr>,
-    ## #   prefix <chr>, publisher <chr>, reference.count <chr>, score <chr>,
-    ## #   source <chr>, subject <chr>, title <chr>, type <chr>,
-    ## #   update.policy <chr>, URL <chr>, volume <chr>, assertion <list>,
-    ## #   author <list>, issue <chr>
+    ## #   ISSN <chr>, issue <chr>, issued <chr>, link <list>, member <chr>,
+    ## #   page <chr>, prefix <chr>, publisher <chr>, reference.count <chr>,
+    ## #   score <chr>, source <chr>, subject <chr>, title <chr>, type <chr>,
+    ## #   URL <chr>, volume <chr>, assertion <list>, author <list>,
+    ## #   license_date <chr>, license_content.version <chr>,
+    ## #   license_delay.in.days <chr>, license_URL <chr>, update.policy <chr>
 
-Wow, very comprehensive! &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Wow, very comprehensive!
 
 ### By date
 
@@ -279,7 +278,23 @@ Let's plot:
 
 ![](figure/unnamed-chunk-17-1.png)
 
-Wow, usage in Iran peaked around christmas. Why?
+Show the top 10 busiest days as well.
 
-======= &gt;&gt;&gt;&gt;&gt;&gt;&gt;
-30e9064fed8118502b4a0cb7370fc6ef0821ccfc
+    ir_per_date %>% arrange(desc(events))
+
+    ## # A tibble: 164 x 2
+    ##          date events
+    ##        <date>  <int>
+    ## 1  2015-12-22  38069
+    ## 2  2015-12-23  29941
+    ## 3  2015-12-25  29261
+    ## 4  2015-11-03  28498
+    ## 5  2015-10-13  26417
+    ## 6  2015-11-02  26155
+    ## 7  2015-11-01  26035
+    ## 8  2015-10-31  25781
+    ## 9  2015-10-14  25387
+    ## 10 2015-10-10  24911
+    ## # ... with 154 more rows
+
+Wow, usage in Iran peaked around christmas. Why?

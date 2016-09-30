@@ -165,7 +165,6 @@ my_md$data
 ```
 
 Wow, very comprehensive!
-<<<<<<< HEAD
 
 ### By date
 
@@ -209,8 +208,11 @@ ggplot(ir_t, aes(as.Date(date), events, group = 1)) +
   theme_bw()
 ```
 
+Show the top 10 busiest days as well.
+
+```{r}
+ir_per_date %>% arrange(desc(events))
+```
+
 Wow, usage in Iran peaked around christmas. Why?
 
-
-=======
->>>>>>> 30e9064fed8118502b4a0cb7370fc6ef0821ccfc
