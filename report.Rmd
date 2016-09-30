@@ -3,6 +3,17 @@ title: "3 am sci hub"
 output: md_document
 ---
 
+Install the required packages (see [here](https://github.com/ropensci/rdatacite) for more information).
+
+```{r loadpkgs}
+options(stringsAsFactors = FALSE)
+
+# install required packages
+# install.packages("tidyverse")
+
+library('tidyverse')
+```
+
 ## Load Sci-Hub Data into R
 
 To load one file representing one month, simply type:
