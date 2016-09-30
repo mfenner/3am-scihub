@@ -1,0 +1,18 @@
+---
+title: "3 am sci hub"
+output: md_document
+---
+
+## Load Sci-Hub Data into R
+
+To load one file representing one month, simply type:
+
+```{r}
+my_data <- readr::read_tsv(file = "data/scihub_data/dec2015.tab", col_names = FALSE)
+```
+
+Now let's inspect the data:
+
+```{r}
+my_data
+```
