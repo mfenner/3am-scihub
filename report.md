@@ -244,7 +244,7 @@ Iranian usage events.
     ##   X6 = col_character()
     ## )
 
-So, let's inspect the data frame
+So, let's inspect the data frame and save a local copy
 
     sci_hub_ir
 
@@ -262,3 +262,63 @@ So, let's inspect the data frame
     ## 9  2015-12-01 00:00:46     10.1016/j.ejps.2005.04.010 56ed2c3968813  Iran
     ## 10 2015-12-01 00:00:49              10.1021/ja208256u 56ed2b4017fd3  Iran
     ## # ... with 2,631,025 more rows, and 2 more variables: X5 <chr>, X6 <chr>
+
+    write.csv(sci_hub_ir, "data/iran.csv")
+
+Analysis
+--------
+
+Possible questions:
+
+What is the usage by: - month - city - subject (defined by publishers at
+the journal level, might be a bit messy) - journal - publisher
+
+To get subject, journal and publisher information, we need to use data
+from Crossref based on the DOI.
+
+Fetching data from Crossref with the `rcrossref`package
+-------------------------------------------------------
+
+-   Link: <https://github.com/ropensci/rcrossref>
+
+Make sure to install `rcrossref` from CRAN
+
+    install.packages("rcrossref")
+    library(rcrossref)
+
+And now get metadata for a sample of 10 publications
+
+    my_dois <- sample(sci_hub_ir$X2, 10)
+
+And now fetch the metadate
+
+    my_md <- rcrossref::cr_works(my_dois)
+
+And let's inspect it:
+
+    my_md$data
+
+    ## # A tibble: 10 x 32
+    ##               alternative.id
+    ##                        <chr>
+    ## 1          S0376738814007686
+    ## 2                           
+    ## 3  10.1108/03090560610670016
+    ## 4          10.1021/bi900756y
+    ## 5  10.1108/14637150810876634
+    ## 6          10.1021/ja973437o
+    ## 7                           
+    ## 8                        189
+    ## 9                           
+    ## 10                          
+    ## # ... with 31 more variables: container.title <chr>, created <chr>,
+    ## #   deposited <chr>, DOI <chr>, funder <list>, indexed <chr>, ISBN <chr>,
+    ## #   ISSN <chr>, issued <chr>, license_date <chr>,
+    ## #   license_content.version <chr>, license_delay.in.days <chr>,
+    ## #   license_URL <chr>, link <list>, member <chr>, page <chr>,
+    ## #   prefix <chr>, publisher <chr>, reference.count <chr>, score <chr>,
+    ## #   source <chr>, subject <chr>, title <chr>, type <chr>,
+    ## #   update.policy <chr>, URL <chr>, volume <chr>, assertion <list>,
+    ## #   author <list>, issue <chr>, subtitle <chr>
+
+Wow, very comprehensive!

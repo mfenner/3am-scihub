@@ -92,10 +92,53 @@ for (i in my_files) {
 }
 ```
 
-So, let's inspect the data frame
+So, let's inspect the data frame and save a local copy
 
 ```{r}
 sci_hub_ir
+write.csv(sci_hub_ir, "data/iran.csv")
 ```
 
+## Analysis
 
+Possible questions:
+
+What is the usage by:
+- month
+- city
+- subject (defined by publishers at the journal level, might be a bit messy)
+- journal
+- publisher
+
+To get subject, journal and publisher information, we need to use data from Crossref based on the DOI.
+
+## Fetching data from Crossref with the `rcrossref`package
+
+- Link: <https://github.com/ropensci/rcrossref>
+
+Make sure to install `rcrossref` from CRAN
+
+```
+install.packages("rcrossref")
+library(rcrossref)
+```
+
+And now get metadata for a sample of 10 publications
+
+```{r}
+my_dois <- sample(sci_hub_ir$X2, 10)
+```
+
+And now fetch the metadate
+
+```{r}
+my_md <- rcrossref::cr_works(my_dois)
+```
+
+And let's inspect it:
+
+```{r}
+my_md$data
+```
+
+Wow, very comprehensive!
