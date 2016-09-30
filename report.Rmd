@@ -3,6 +3,19 @@ title: "3 am sci hub"
 output: md_document
 ---
 
+```{r}
+knitr::opts_chunk$set(
+  fig.width=10,
+ message=FALSE,
+ warning=FALSE,
+ fig.path='figure/',
+ fig.cap = "", 
+ echo = TRUE,
+ warning = FALSE, 
+ message = FALSE
+)
+```
+
 Install the required packages (see [here](https://github.com/ropensci/rdatacite) for more information).
 
 ```{r loadpkgs}
@@ -42,7 +55,7 @@ It looks clean, great!
 
 Well, the data is huge and you might run out of memory if you try to load the whole dataset. So, let's subset our data and save it to your disk. Let's define a function:
 
-```{r}
+```{r, echo=TRUE}
 my_helper <- function(file = NULL) {
   tt <- readr::read_tsv(file = file, col_names = FALSE) %>%
   dplyr::filter(X4 == "Iran")
@@ -85,7 +98,7 @@ So, let's inspect the data frame and save a local copy
 
 ```{r}
 sci_hub_ir
-write.csv(sci_hub_ir, "data/iran.csv")
+write.csv(sci_hub_ir, "data/iran.csv", row.names = FALSE)
 ```
 
 ## Analysis
@@ -101,9 +114,16 @@ What is the usage by:
 
 To get subject, journal and publisher information, we need to use data from Crossref based on the DOI.
 
-## Fetching data from Crossref with the `rcrossref`package
+### By month
 
-- Link: <https://github.com/ropensci/rcrossref>
+
+## Fetching data from Crossref with the `rcrossref` package
+
+We could use [rcrossref](https://github.com/ropensci/rcrossref) to fetch information on:
+
+- subject (defined by publishers at the journal level, might be a bit messy)
+- journal
+- publisher
 
 Make sure to install `rcrossref` from CRAN
 
@@ -118,7 +138,7 @@ And now get metadata for a sample of 10 publications
 my_dois <- sample(sci_hub_ir$X2, 10)
 ```
 
-And now fetch the metadate
+And now fetch the metadata
 
 ```{r}
 my_md <- rcrossref::cr_works(my_dois)
@@ -131,3 +151,49 @@ my_md$data
 ```
 
 Wow, very comprehensive!
+
+### By date
+
+First step: Transform to dates
+
+```{r}
+sci_hub_ir <- sci_hub_ir %>% 
+  dplyr::mutate(date = format(sci_hub_ir$X1, "%Y-%m-%d"))
+```
+
+Second step: Create summary of events per day
+
+```{r}
+ir_per_date <- sci_hub_ir %>% 
+  group_by(date) %>% 
+  summarize(events = n())
+ir_per_date
+```
+
+Well, we know that there are missing values in November. Let's deal with it
+
+```{r}
+# make a date sequence as data.frame
+my_dates <- seq(as.Date("2015-09-01"), as.Date("2016-02-28"), by = "day")
+my_dates <- as.data.frame(my_dates)
+# merge it
+ir_per_date$date <- as.Date(ir_per_date$date)
+ir_t <- right_join(ir_per_date, my_dates, by = c("date" = "my_dates"))
+# deal with empty values  
+ir_t$events[is.na(ir_t$events)] <- 0
+```
+
+Let's plot:
+
+```{r, fig.height= 4, fig.width= 12}
+ggplot(ir_t, aes(as.Date(date), events, group = 1)) + 
+  geom_area(fill = "#740e18") + 
+  scale_x_date(date_breaks = "1 month", date_labels = "%m") + 
+  xlab("Date") +
+  ylab("Sci-Hub Downloads from Iran") +
+  theme_bw()
+```
+
+Wow, usage in Iran peaked around christmas. Why?
+
+

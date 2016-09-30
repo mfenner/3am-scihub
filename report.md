@@ -1,24 +1,30 @@
+    knitr::opts_chunk$set(
+      fig.width=10,
+     message=FALSE,
+     warning=FALSE,
+     fig.path='figure/',
+     fig.cap = "", 
+     echo = TRUE,
+     warning = FALSE, 
+     message = FALSE
+    )
+
+Install the required packages (see
+[here](https://github.com/ropensci/rdatacite) for more information).
+
+    options(stringsAsFactors = FALSE)
+
+    # install required packages
+    # install.packages("tidyverse")
+
+    library('tidyverse')
+
 Load Sci-Hub Data into R
 ------------------------
 
 To load one file representing one month, simply type:
 
     my_data <- readr::read_tsv(file = "data/scihub_data/dec2015.tab", col_names = FALSE)
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-
-    ## Warning: 2 parsing failures.
-    ##     row col  expected    actual
-    ## 2498160  -- 6 columns 2 columns
-    ## 2498161  -- 6 columns 5 columns
 
 Now let's inspect the data:
 
@@ -43,18 +49,6 @@ Now let's inspect the data:
 Is it clean?
 
     library(dplyr)
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     my_data %>% 
       dplyr::group_by(X4) %>% 
       dplyr::summarise(Counts = n()) %>%
@@ -97,67 +91,6 @@ And apply it
 
     sapply(my_files, my_helper)
 
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-
-    ## Warning: 2 parsing failures.
-    ##     row col  expected    actual
-    ## 2498160  -- 6 columns 2 columns
-    ## 2498161  -- 6 columns 5 columns
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-
     ## $`data/scihub_data/dec2015.tab`
     ## NULL
     ## 
@@ -189,61 +122,6 @@ Iranian usage events.
       sci_hub_ir <- rbind(sci_hub_ir, my_data)
     }
 
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-    ## Parsed with column specification:
-    ## cols(
-    ##   X1 = col_datetime(format = ""),
-    ##   X2 = col_character(),
-    ##   X3 = col_character(),
-    ##   X4 = col_character(),
-    ##   X5 = col_character(),
-    ##   X6 = col_character()
-    ## )
-
 So, let's inspect the data frame and save a local copy
 
     sci_hub_ir
@@ -263,7 +141,7 @@ So, let's inspect the data frame and save a local copy
     ## 10 2015-12-01 00:00:49              10.1021/ja208256u 56ed2b4017fd3  Iran
     ## # ... with 2,631,025 more rows, and 2 more variables: X5 <chr>, X6 <chr>
 
-    write.csv(sci_hub_ir, "data/iran.csv")
+    write.csv(sci_hub_ir, "data/iran.csv", row.names = FALSE)
 
 Analysis
 --------
@@ -276,10 +154,18 @@ the journal level, might be a bit messy) - journal - publisher
 To get subject, journal and publisher information, we need to use data
 from Crossref based on the DOI.
 
-Fetching data from Crossref with the `rcrossref`package
--------------------------------------------------------
+### By month
 
--   Link: <https://github.com/ropensci/rcrossref>
+Fetching data from Crossref with the `rcrossref` package
+--------------------------------------------------------
+
+We could use [rcrossref](https://github.com/ropensci/rcrossref) to fetch
+information on:
+
+-   subject (defined by publishers at the journal level, might be a
+    bit messy)
+-   journal
+-   publisher
 
 Make sure to install `rcrossref` from CRAN
 
@@ -290,7 +176,7 @@ And now get metadata for a sample of 10 publications
 
     my_dois <- sample(sci_hub_ir$X2, 10)
 
-And now fetch the metadate
+And now fetch the metadata
 
     my_md <- rcrossref::cr_works(my_dois)
 
@@ -298,27 +184,80 @@ And let's inspect it:
 
     my_md$data
 
-    ## # A tibble: 10 x 32
-    ##               alternative.id
-    ##                        <chr>
-    ## 1          S0376738814007686
-    ## 2                           
-    ## 3  10.1108/03090560610670016
-    ## 4          10.1021/bi900756y
-    ## 5  10.1108/14637150810876634
-    ## 6          10.1021/ja973437o
-    ## 7                           
-    ## 8                        189
-    ## 9                           
-    ## 10                          
-    ## # ... with 31 more variables: container.title <chr>, created <chr>,
+    ## # A tibble: 10 x 31
+    ##                  alternative.id
+    ##                           <chr>
+    ## 1              0020722583901234
+    ## 2             S0142061514003251
+    ## 3                              
+    ## 4          10.1081/AL-100104916
+    ## 5               10.2514/3.26615
+    ## 6                              
+    ## 7             S0254058405000088
+    ## 8             10.1021/cr400011b
+    ## 9                          9201
+    ## 10 10.1080/10426507.2014.978329
+    ## # ... with 30 more variables: container.title <chr>, created <chr>,
     ## #   deposited <chr>, DOI <chr>, funder <list>, indexed <chr>, ISBN <chr>,
-    ## #   ISSN <chr>, issued <chr>, license_date <chr>,
+    ## #   ISSN <chr>, issue <chr>, issued <chr>, license_date <chr>,
     ## #   license_content.version <chr>, license_delay.in.days <chr>,
     ## #   license_URL <chr>, link <list>, member <chr>, page <chr>,
     ## #   prefix <chr>, publisher <chr>, reference.count <chr>, score <chr>,
-    ## #   source <chr>, subject <chr>, title <chr>, type <chr>,
-    ## #   update.policy <chr>, URL <chr>, volume <chr>, assertion <list>,
-    ## #   author <list>, issue <chr>, subtitle <chr>
+    ## #   source <chr>, subject <chr>, title <chr>, type <chr>, URL <chr>,
+    ## #   volume <chr>, assertion <list>, author <list>, update.policy <chr>
 
 Wow, very comprehensive!
+
+### By date
+
+First step: Transform to dates
+
+    sci_hub_ir <- sci_hub_ir %>% 
+      dplyr::mutate(date = format(sci_hub_ir$X1, "%Y-%m-%d"))
+
+Second step: Create summary of events per day
+
+    ir_per_date <- sci_hub_ir %>% 
+      group_by(date) %>% 
+      summarize(events = n())
+    ir_per_date
+
+    ## # A tibble: 164 x 2
+    ##          date events
+    ##         <chr>  <int>
+    ## 1  2015-09-01  18262
+    ## 2  2015-09-02  21550
+    ## 3  2015-09-03  14367
+    ## 4  2015-09-04  11940
+    ## 5  2015-09-05  10293
+    ## 6  2015-09-06  14650
+    ## 7  2015-09-07  18487
+    ## 8  2015-09-08  15278
+    ## 9  2015-09-09   8112
+    ## 10 2015-09-10  11739
+    ## # ... with 154 more rows
+
+Well, we know that there are missing values in November. Let's deal with
+it
+
+    # make a date sequence as data.frame
+    my_dates <- seq(as.Date("2015-09-01"), as.Date("2016-02-28"), by = "day")
+    my_dates <- as.data.frame(my_dates)
+    # merge it
+    ir_per_date$date <- as.Date(ir_per_date$date)
+    ir_t <- right_join(ir_per_date, my_dates, by = c("date" = "my_dates"))
+    # deal with empty values  
+    ir_t$events[is.na(ir_t$events)] <- 0
+
+Let's plot:
+
+    ggplot(ir_t, aes(as.Date(date), events, group = 1)) + 
+      geom_area(fill = "#740e18") + 
+      scale_x_date(date_breaks = "1 month", date_labels = "%m") + 
+      xlab("Date") +
+      ylab("Sci-Hub Downloads from Iran") +
+      theme_bw()
+
+![](figure/unnamed-chunk-17-1.png)
+
+Wow, usage in Iran peaked around christmas. Why?
