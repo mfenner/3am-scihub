@@ -9,18 +9,36 @@
      message = FALSE
     )
 
-Install the required packages (see
-[here](https://github.com/ropensci/rdatacite) for more information).
+Install the required packages:
 
     options(stringsAsFactors = FALSE)
 
     # install required packages
     # install.packages("tidyverse")
-
+    # install.packages("rcrossref")
     library('tidyverse')
+    library('rcrossref')
 
 Load Sci-Hub Data into R
 ------------------------
+
+The SciHub paper:
+
+Bohannon J (2016) Who's downloading pirated papers? Everyone. Science
+352(6285): 508-512. <https://doi.org/10.1126/science.352.6285.508>
+
+The associated dataset:
+
+Elbakyan A, Bohannon J (2016) Data from: Who's downloading pirated
+papers? Everyone. Dryad Digital Repository.
+<https://doi.org/10.5061/dryad.q447c>
+
+To load the dataset, download the file from the Dryad landing page, or
+directly from
+[here](http://datadryad.org/bitstream/handle/10255/dryad.114259/scihub_data.zip?sequence=1).
+
+After downloading the data, copy the folder `scihub_data` into a new
+`data` folder:
 
 To load one file representing one month, simply type:
 
@@ -185,28 +203,29 @@ And let's inspect it:
     my_md$data
 
     ## # A tibble: 10 x 31
-    ##                  alternative.id
-    ##                           <chr>
-    ## 1              0020722583901234
-    ## 2             S0142061514003251
-    ## 3                              
-    ## 4          10.1081/AL-100104916
-    ## 5               10.2514/3.26615
-    ## 6                              
-    ## 7             S0254058405000088
-    ## 8             10.1021/cr400011b
-    ## 9                          9201
-    ## 10 10.1080/10426507.2014.978329
+    ##               alternative.id
+    ##                        <chr>
+    ## 1          S0020025516000153
+    ## 2                        622
+    ## 3                           
+    ## 4                           
+    ## 5          S098194281300435X
+    ## 6                           
+    ## 7  10.1108/JBIM-04-2012-0066
+    ## 8                        207
+    ## 9                           
+    ## 10         S0045206815000036
     ## # ... with 30 more variables: container.title <chr>, created <chr>,
     ## #   deposited <chr>, DOI <chr>, funder <list>, indexed <chr>, ISBN <chr>,
-    ## #   ISSN <chr>, issue <chr>, issued <chr>, license_date <chr>,
+    ## #   ISSN <chr>, issued <chr>, license_date <chr>,
     ## #   license_content.version <chr>, license_delay.in.days <chr>,
     ## #   license_URL <chr>, link <list>, member <chr>, page <chr>,
     ## #   prefix <chr>, publisher <chr>, reference.count <chr>, score <chr>,
-    ## #   source <chr>, subject <chr>, title <chr>, type <chr>, URL <chr>,
-    ## #   volume <chr>, assertion <list>, author <list>, update.policy <chr>
+    ## #   source <chr>, subject <chr>, title <chr>, type <chr>,
+    ## #   update.policy <chr>, URL <chr>, volume <chr>, assertion <list>,
+    ## #   author <list>, issue <chr>
 
-Wow, very comprehensive!
+Wow, very comprehensive! &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 
 ### By date
 
@@ -261,3 +280,6 @@ Let's plot:
 ![](figure/unnamed-chunk-17-1.png)
 
 Wow, usage in Iran peaked around christmas. Why?
+
+======= &gt;&gt;&gt;&gt;&gt;&gt;&gt;
+30e9064fed8118502b4a0cb7370fc6ef0821ccfc

@@ -16,18 +16,32 @@ knitr::opts_chunk$set(
 )
 ```
 
-Install the required packages (see [here](https://github.com/ropensci/rdatacite) for more information).
+
+Install the required packages:
 
 ```{r loadpkgs}
 options(stringsAsFactors = FALSE)
 
 # install required packages
 # install.packages("tidyverse")
-
+# install.packages("rcrossref")
 library('tidyverse')
+library('rcrossref')
 ```
 
 ## Load Sci-Hub Data into R
+
+The SciHub paper:
+
+Bohannon J (2016) Who's downloading pirated papers? Everyone. Science 352(6285): 508-512. [https://doi.org/10.1126/science.352.6285.508](https://doi.org/10.1126/science.352.6285.508)
+
+The associated dataset:
+
+Elbakyan A, Bohannon J (2016) Data from: Who's downloading pirated papers? Everyone. Dryad Digital Repository. [https://doi.org/10.5061/dryad.q447c](https://doi.org/10.5061/dryad.q447c)
+
+To load the dataset, download the file from the Dryad landing page, or directly from [here](http://datadryad.org/bitstream/handle/10255/dryad.114259/scihub_data.zip?sequence=1).
+
+After downloading the data, copy the folder `scihub_data` into a new `data` folder:
 
 To load one file representing one month, simply type:
 
@@ -151,6 +165,7 @@ my_md$data
 ```
 
 Wow, very comprehensive!
+<<<<<<< HEAD
 
 ### By date
 
@@ -197,3 +212,5 @@ ggplot(ir_t, aes(as.Date(date), events, group = 1)) +
 Wow, usage in Iran peaked around christmas. Why?
 
 
+=======
+>>>>>>> 30e9064fed8118502b4a0cb7370fc6ef0821ccfc
