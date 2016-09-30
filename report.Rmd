@@ -10,7 +10,9 @@ options(stringsAsFactors = FALSE)
 
 # install required packages
 install.packages("tidyverse")
+install.packages("rcrossref")
 library('tidyverse')
+library('rcrossref')
 ```
 
 ## Load Sci-Hub Data into R
