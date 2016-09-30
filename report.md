@@ -166,13 +166,17 @@ Analysis
 
 Possible questions:
 
-What is the usage by: - month - city - subject (defined by publishers at
-the journal level, might be a bit messy) - journal - publisher
+What is the usage by:
+
+-   month
+-   city
+-   subject (defined by publishers at the journal level, might be a
+    bit messy)
+-   journal
+-   publisher
 
 To get subject, journal and publisher information, we need to use data
 from Crossref based on the DOI.
-
-### By month
 
 Fetching data from Crossref with the `rcrossref` package
 --------------------------------------------------------
@@ -203,30 +207,30 @@ And let's inspect it:
     my_md$data
 
     ## # A tibble: 10 x 31
-    ##               alternative.id
-    ##                        <chr>
-    ## 1     10.1021/acsami.5b06813
-    ## 2  10.1142/S1793557112500155
-    ## 3          S1578219009700034
-    ## 4          10.1021/ie020726z
-    ## 5          S0015379683800766
-    ## 6          S0927024816000131
-    ## 7          S0006291X10008648
-    ## 8          10.1021/la800858z
-    ## 9          S1877705815001599
-    ## 10         S0020746212001370
+    ##                   alternative.id
+    ##                            <chr>
+    ## 1                               
+    ## 2  10.1080/08961530.2015.1072075
+    ## 3              S0924013607008941
+    ## 4                               
+    ## 5              10.1021/ie401524g
+    ## 6              S0257897213001151
+    ## 7              S0143974X04001476
+    ## 8                               
+    ## 9                               
+    ## 10             S0920410514001387
     ## # ... with 30 more variables: container.title <chr>, created <chr>,
     ## #   deposited <chr>, DOI <chr>, funder <list>, indexed <chr>, ISBN <chr>,
-    ## #   ISSN <chr>, issue <chr>, issued <chr>, link <list>, member <chr>,
-    ## #   page <chr>, prefix <chr>, publisher <chr>, reference.count <chr>,
-    ## #   score <chr>, source <chr>, subject <chr>, title <chr>, type <chr>,
-    ## #   URL <chr>, volume <chr>, assertion <list>, author <list>,
-    ## #   license_date <chr>, license_content.version <chr>,
-    ## #   license_delay.in.days <chr>, license_URL <chr>, update.policy <chr>
+    ## #   ISSN <chr>, issued <chr>, link <list>, member <chr>, prefix <chr>,
+    ## #   publisher <chr>, reference.count <chr>, score <chr>, source <chr>,
+    ## #   subject <chr>, title <chr>, type <chr>, URL <chr>, assertion <list>,
+    ## #   author <list>, issue <chr>, page <chr>, update.policy <chr>,
+    ## #   volume <chr>, license_date <chr>, license_content.version <chr>,
+    ## #   license_delay.in.days <chr>, license_URL <chr>
 
 Wow, very comprehensive!
 
-### By date
+### Usage by date
 
 First step: Transform to dates
 

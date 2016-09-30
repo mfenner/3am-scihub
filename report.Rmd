@@ -120,6 +120,7 @@ write.csv(sci_hub_ir, "data/iran.csv", row.names = FALSE)
 Possible questions:
 
 What is the usage by:
+
 - month
 - city
 - subject (defined by publishers at the journal level, might be a bit messy)
@@ -127,9 +128,6 @@ What is the usage by:
 - publisher
 
 To get subject, journal and publisher information, we need to use data from Crossref based on the DOI.
-
-### By month
-
 
 ## Fetching data from Crossref with the `rcrossref` package
 
@@ -166,7 +164,7 @@ my_md$data
 
 Wow, very comprehensive!
 
-### By date
+### Usage by date
 
 First step: Transform to dates
 
